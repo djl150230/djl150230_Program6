@@ -1,9 +1,10 @@
 /*
  * Implementation of CDK Matrix
  *
- * File:   cdk.cc
+ * File:   cdkMatrix.cc
  * Author: David Lanius
  * Email:  djl150230@utdallas.edu
+ * Course: CS3377.002
  */
 
 #include <iostream>
@@ -35,6 +36,7 @@ public:
  * that will hold a C-Style string. This is the
  * size of the fixed length buffer.
  */
+
 const int maxRecordStringLength = 25;
 class BinaryFileRecord
 {
@@ -49,27 +51,17 @@ int main()
   BinaryFileHeader *header = new BinaryFileHeader();
   BinaryFileRecord *record = new BinaryFileRecord();
   ifstream binInFile ("cs3377.bin", ios::in | ios::binary);
-  
-  /*BinaryFileRecord *myRecord = new BinaryFileRecord();
-
-  ifstream binInfile ("binaryfile.bin", ios::in | ios::binary);
-
-  binInfile.read((char *) myRecord, sizeof(BinaryFileRecord));
-  cout << "Value was: " << setprecision(10) << myRecord->myVal << endl;
-  binInfile.close();
-  */
 
   WINDOW	*window;
   CDKSCREEN	*cdkscreen;
   CDKMATRIX     *myMatrix;           // CDK Screen Matrix
 
-  // Remember that matrix starts out at 1,1.
+  // Matrix starts out at 1,1.
   // Since arrays start out at 0, the first entries
-  // below ("R0", and "C0") are just placeholders
+  // below ("R0", and "C0") are just placeholders.
   // 
-  // Finally... make sure your arrays have enough entries given the
-  // values you choose to set for MATRIX_WIDTH and MATRIX_HEIGHT
-  // above.
+  // Making sure arrays have enough entries given the
+  // values chosen to set for MATRIX_WIDTH and MATRIX_HEIGHT.
 
   const char 		*rowTitles[] = {"0", "a", "b", "c", "d", "e"};
   const char 		*columnTitles[] = {"0", "a", "b", "c"};
@@ -77,9 +69,9 @@ int main()
   int		boxTypes[] = {vMIXED, vMIXED, vMIXED, vMIXED,  vMIXED,  vMIXED};
 
   /*
-   * Initialize the Cdk screen.
+   * Initialize the CDK screen.
    *
-   * Make sure the putty terminal is large enough
+   * Make sure the terminal window is large enough
    */
   window = initscr();
   cdkscreen = initCDKScreen(window);
@@ -104,7 +96,7 @@ int main()
   drawCDKMatrix(myMatrix, true);
 
   /*
-   * Dipslay a message
+   * Dipslay the header read from binary file
    */
   binInFile.read((char*) header, sizeof(BinaryFileHeader));
   ss << hex << uppercase << header->magicNumber;
@@ -123,7 +115,7 @@ int main()
   drawCDKMatrix(myMatrix, true);
   ss.str("");
   
-  /* Now reading the records */
+  /* Now reading the records in the binary file*/
   int j = 2;
   int k = 1;
   for (int i = 0; i < 4; i++)
@@ -153,5 +145,6 @@ int main()
   // Cleanup screen
   endCDK();
 
+  // Close binary file
   binInFile.close();
 }
