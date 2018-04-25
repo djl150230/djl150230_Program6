@@ -17,9 +17,9 @@ LDLIBS = -lcdk -lcurses
 
 PROJECTNAME = Program6
 
-EXECFILE = cdkexample
+EXECFILE = cdkMatrix
 
-OBJS = cdkexample.o
+OBJS = cdkMatrix.o
 
 
 all: $(EXECFILE)
