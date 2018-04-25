@@ -47,6 +47,7 @@ int main()
 {
   stringstream ss;
   BinaryFileHeader *header = new BinaryFileHeader();
+  BinaryFileRecord *record = new BinaryFileRecord();
   ifstream binInFile ("cs3377.bin", ios::in | ios::binary);
   
   /*BinaryFileRecord *myRecord = new BinaryFileRecord();
@@ -121,7 +122,29 @@ int main()
   setCDKMatrixCell(myMatrix, 1, 3, ("NumRecords: " + numRec).c_str());
   drawCDKMatrix(myMatrix, true);
   ss.str("");
-      /* required  */
+  
+  /* Now reading the records */
+  int j = 2;
+  int k = 1;
+  for (int i = 0; i < 4; i++)
+    {
+      k = 2;
+      binInFile.read((char*) record, sizeof(BinaryFileRecord));
+      ss << record->stringBuffer;
+      string buffer(ss.str());
+      setCDKMatrixCell(myMatrix, j, k, buffer.c_str());
+      drawCDKMatrix(myMatrix, true);
+      k--;
+      int size = buffer.size();
+      ss.str("");
+      ss << dec << size;
+      string strlen(ss.str());
+      setCDKMatrixCell(myMatrix, j, k, ("strlen: " + strlen).c_str());
+      drawCDKMatrix(myMatrix, true);
+      ss.str("");
+      j++;
+      k++;
+    }
 
   /* So we can see results, pause until a key is pressed. */
   unsigned char x;
@@ -129,4 +152,6 @@ int main()
 
   // Cleanup screen
   endCDK();
+
+  binInFile.close();
 }
