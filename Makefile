@@ -3,6 +3,8 @@
 # CS3377.002
 # djl150230@utdallas.edu
 #
+# Makefile for Program 6
+#
 
 CXX = g++
 CXXFLAGS = -Wall -g 
